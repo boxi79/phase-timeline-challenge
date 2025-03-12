@@ -1,8 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 type NumberInputProps = {
   value: number;
   onChange: (value: number) => void;
+  format?: (value: number) => number;
   min: number;
   max: number;
   step: number;
@@ -17,13 +18,14 @@ const isValidNumber = (str: string) => {
   return !isNaN(numericValue); // Check if it can be converted to a number
 }
 
-const NumberInput: React.FC<NumberInputProps> = ({ value, onChange, dataTestId, min, max, step, label }) => {
+const NumberInput: React.FC<NumberInputProps> = ({ value, onChange, dataTestId, min, max, step, label, format }) => {
   const [displayValue, setDisplayValue] = useState<string>(String(value));
   const cancelRef = useRef(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputType = (e.nativeEvent as InputEvent).inputType;
     const newValue = e.target.value;
+    setDisplayValue(newValue);
     if (
       inputType === "stepUp" ||
       inputType === "stepDown" ||
@@ -31,9 +33,6 @@ const NumberInput: React.FC<NumberInputProps> = ({ value, onChange, dataTestId, 
     ) {
       e.target.select();
       handleCheck(newValue);
-    }
-    else {
-      setDisplayValue(newValue);
     }
   };
 
@@ -48,7 +47,10 @@ const NumberInput: React.FC<NumberInputProps> = ({ value, onChange, dataTestId, 
     if (!isValidNumber(v)) {
       setDisplayValue(String(value));
     } else {
-      const numericValue = Number(Math.max(min, Math.min(max, Math.round(Number(v)))));
+      let numericValue = Number(Math.max(min, Math.min(max, Math.round(Number(v)))));
+      if (format) {
+        numericValue = format(numericValue);
+      }
       onChange(numericValue);
       setDisplayValue(String(numericValue));
     }
@@ -56,7 +58,6 @@ const NumberInput: React.FC<NumberInputProps> = ({ value, onChange, dataTestId, 
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      handleCheck();
       e.currentTarget.blur();
     } else if (e.key === 'Escape') {
       setDisplayValue(String(value));
@@ -69,6 +70,10 @@ const NumberInput: React.FC<NumberInputProps> = ({ value, onChange, dataTestId, 
     e.target.select();
     cancelRef.current = false;
   };
+
+  useEffect(() => {
+    setDisplayValue(String(value));
+  }, [value]);
 
   return (
     <fieldset className="flex gap-1">
