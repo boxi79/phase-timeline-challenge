@@ -1,8 +1,15 @@
-export const Segment = () => {
-  // TODO: resize based on time
+import { useTimeline } from './TimelineContext';
 
+export const Segment = () => {
+  const { duration } = useTimeline();
   return (
-    <div className="w-[2000px] py-2" data-testid="segment">
+    <div
+      className="py-2"
+      data-testid="segment"
+      style={{
+        width: `${duration}px`,
+      }}
+    >
       <div className="h-6 rounded-md bg-white/10"></div>
     </div>
   );

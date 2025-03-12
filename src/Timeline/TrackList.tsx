@@ -1,12 +1,24 @@
+import { useCallback } from 'react';
+import { useTimeline } from './TimelineContext';
+
 export const TrackList = () => {
-  // TODO: implement scroll sync with `KeyframeList`
+  const { scrollRefs } = useTimeline();
+  const { trackListRef, keyframeListRef } = scrollRefs;
+
+  const handleScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
+    if (trackListRef.current && keyframeListRef.current) {
+      keyframeListRef.current.scrollTop = e.currentTarget.scrollTop;
+    }
+  }, [trackListRef, keyframeListRef]);
 
   return (
     <div
+      ref={trackListRef}
       className="grid grid-flow-row auto-rows-[40px]
       border-r border-solid border-r-gray-700 
       overflow-auto"
       data-testid="track-list"
+      onScroll={handleScroll}
     >
       <div className="p-2">
         <div>Track A</div>
