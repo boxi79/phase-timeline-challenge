@@ -129,7 +129,7 @@ describe('NumberInput Component', () => {
 
     await userEvent.click(input);
     await userEvent.type(input, '7');
-    await userEvent.keyboard('{escape}')
+    await userEvent.keyboard('{escape}');
 
     expect(input).toHaveDisplayValue(String(defaultProps.value));
     expect(defaultProps.onChange).not.toHaveBeenCalled();

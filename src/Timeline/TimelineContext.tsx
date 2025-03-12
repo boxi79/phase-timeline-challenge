@@ -33,7 +33,7 @@ export const TimelineProvider = ({ children }: { children: ReactNode }) => {
     setTime(formattedTime > duration ? duration : formattedTime); // Ensure time does not exceed duration
   }, [time, duration]);
 
-  const contexts = { time, setTime, updateTime, duration, setDuration, scrollRefs: { rulerRef, keyframeListRef, trackListRef } }
+  const contexts = { time, setTime, updateTime, duration, setDuration, scrollRefs: { rulerRef, keyframeListRef, trackListRef } };
 
   return (
     <TimelineContext.Provider value={contexts}>

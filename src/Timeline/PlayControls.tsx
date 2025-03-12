@@ -15,7 +15,7 @@ export const PlayControls = () => {
   const durationFormat = useCallback((newDuration: number) => {
     const value = Math.max(MIN_DURATION, Math.min(MAX_DURATION, Math.round(newDuration / STEP) * STEP)); // Clamp duration and round
     return value;
-  }, [])
+  }, []);
 
 
   const handleTimeChange = (newTime: number) => {

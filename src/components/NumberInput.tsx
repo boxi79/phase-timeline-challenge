@@ -16,7 +16,7 @@ const isValidNumber = (str: string) => {
   if (str.trim() === "") return false; // Reject empty or whitespace-only strings
   const numericValue = Number(str);
   return !isNaN(numericValue); // Check if it can be converted to a number
-}
+};
 
 const NumberInput: React.FC<NumberInputProps> = ({ value, onChange, dataTestId, min, max, step, label, format }) => {
   const [displayValue, setDisplayValue] = useState<string>(String(value));
@@ -54,7 +54,7 @@ const NumberInput: React.FC<NumberInputProps> = ({ value, onChange, dataTestId, 
       onChange(numericValue);
       setDisplayValue(String(numericValue));
     }
-  }
+  };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
