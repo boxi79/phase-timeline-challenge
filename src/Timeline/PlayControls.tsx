@@ -1,18 +1,9 @@
 import { useCallback, useEffect } from 'react';
 import NumberInput from '../components/NumberInput';
+import { useTimeline, MIN_DURATION, MAX_DURATION, STEP  } from './TimelineContext';
 
-export const MIN_DURATION = 100;
-export const MAX_DURATION = 6000;
-export const STEP = 10;
-
-type PlayControlsProps = {
-  time: number;
-  setTime: (time: number) => void;
-  duration: number;
-  setDuration: (time: number) => void;
-};
-
-export const PlayControls = ({ time, setTime, duration, setDuration }: PlayControlsProps) => {
+export const PlayControls = () => {
+  const { time, setTime, duration, setDuration } = useTimeline();
   const timeFormat = useCallback((newTime: number) => {
     let value = Math.max(0, Math.round(newTime / STEP) * STEP); // Round to nearest multiple of 10
     if (newTime > duration) {
