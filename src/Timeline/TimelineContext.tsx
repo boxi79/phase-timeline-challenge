@@ -5,7 +5,7 @@ export const MAX_DURATION = 6000;
 export const MIN_DURATION = 100;
 export const STEP = 10;
 
-interface TimelineContextType {
+export interface TimelineContextType {
   time: number;
   duration: number;
   setTime: (time: number) => void;
